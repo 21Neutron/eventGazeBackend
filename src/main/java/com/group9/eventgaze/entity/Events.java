@@ -6,23 +6,28 @@ import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Document(collection = "events")
 public class Events {
 
     @Id
-    private ObjectId event_id;
+    @Field("event_id")
+    private ObjectId eventId;
 
-    private String event_name;
+    @Field("event_name")
+    private String eventName;
 
-    private String event_description;
+    @Field("event_description")
+    private String eventDescription;
 
-    private String event_scope;
+    @Field("event_scope")
+    private String eventScope;
 
-    private int publisher_id;
+    @Field("publisher_id")
+    private Integer publisherId;
 
-    private String event_tags;
-
-
+    @Field("event_tags")
+    private String eventTags;
 }

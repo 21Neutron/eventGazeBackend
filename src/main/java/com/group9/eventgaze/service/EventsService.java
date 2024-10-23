@@ -35,5 +35,19 @@ public class EventsService {
         eventsRepo.deleteById(myId);
     }
 
+    public Events updateEventById(ObjectId myId, Events newEvent) {
+        Events oldEvent = eventsRepo.findById(myId).orElse(null);
+
+        if (oldEvent != null && newEvent != null) {
+            oldEvent.setEventName(newEvent.getEventName() != null && !newEvent.getEventName().isEmpty() ? newEvent.getEventName() : oldEvent.getEventName());
+            oldEvent.setEventDescription(newEvent.getEventDescription() != null && !newEvent.getEventDescription().isEmpty() ? newEvent.getEventDescription() : oldEvent.getEventDescription());
+            oldEvent.setEventScope(newEvent.getEventScope() != null && !newEvent.getEventScope().isEmpty() ? newEvent.getEventScope() : oldEvent.getEventScope());
+            oldEvent.setEventTags(newEvent.getEventTags() != null && !newEvent.getEventTags().isEmpty() ? newEvent.getEventTags() : oldEvent.getEventTags());
+
+            eventsRepo.save(oldEvent);
+        }
+        return oldEvent;
+    }
+
 
 }

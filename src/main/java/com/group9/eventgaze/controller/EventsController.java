@@ -2,7 +2,6 @@ package com.group9.eventgaze.controller;
 
 import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.service.EventsService;
-import jdk.jfr.Event;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +39,8 @@ public class EventsController {
     }
 
     @PutMapping("id/{myId}")
-    public Events updateEventById(@PathVariable ObjectId id, @RequestBody Events my){
-        return null;
+    public Events updateByEventId(@PathVariable ObjectId myId, @RequestBody Events newEvent){
+        return eventsService.updateEventById(myId, newEvent);
     }
 }
 
