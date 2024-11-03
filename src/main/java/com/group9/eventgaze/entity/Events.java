@@ -2,6 +2,8 @@ package com.group9.eventgaze.entity;
 
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -12,9 +14,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "events")
 public class Events {
 
+
     @Id
     @Field("event_id")
-    private ObjectId eventId;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private ObjectId eventId = new ObjectId();
+
+    @Field("categoryId")
+    private Integer categoryId;
 
     @Field("event_name")
     private String eventName;
@@ -30,4 +37,7 @@ public class Events {
 
     @Field("event_tags")
     private String eventTags;
+
+    @Field("event_img")
+    private String eventImage;
 }

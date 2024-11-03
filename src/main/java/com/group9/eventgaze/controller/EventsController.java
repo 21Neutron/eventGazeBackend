@@ -5,7 +5,9 @@ import com.group9.eventgaze.service.EventsService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -16,13 +18,14 @@ public class EventsController {
     @Autowired
     private EventsService eventsService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Events> getAll(){
+
         return eventsService.getAllEvents();
     }
 
-    @PostMapping()
-    public Events createEvent(@RequestBody Events myevents){
+    @PostMapping("/add")
+    public Events createEvent(@RequestBody Events myevents) {
         eventsService.saveEvent(myevents);
         return myevents;
     }
@@ -33,7 +36,7 @@ public class EventsController {
     }
 
     @DeleteMapping("id/{myId}")
-    public String deleteEventbyId(@PathVariable ObjectId myId) {
+    public String deleteEventById(@PathVariable ObjectId myId) {
         eventsService.deleteEventById(myId);
         return "successfully deleted";
     }
