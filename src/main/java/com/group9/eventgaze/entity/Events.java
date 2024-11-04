@@ -2,32 +2,44 @@ package com.group9.eventgaze.entity;
 
 
 
+import jakarta.persistence.*;
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
+
 
 @Data
-@Document(collection = "events")
+@Entity
+@Table(name = "events")
 public class Events {
 
     @Id
-    @Field("event_id")
-    private ObjectId eventId;
+    @Column(name = "event_id",nullable = false,unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long eventId;
 
-    @Field("event_name")
+    @Column(name = "event_name")
     private String eventName;
 
-    @Field("event_description")
+    @Column(name = "event_description")
     private String eventDescription;
 
-    @Field("event_scope")
+
+    @Column(name = "event_date")
+    private LocalDate eventDate;
+
+    @Column(name = "event_scope")
     private String eventScope;
 
-    @Field("publisher_id")
-    private Integer publisherId;
+    @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
+    @ManyToOne
+    private Publishers publishers;
 
-    @Field("event_tags")
+    @Column(name = "event_tags")
     private String eventTags;
+
+    @Column(name = "event_art")
+    private String eventArt;
 }
