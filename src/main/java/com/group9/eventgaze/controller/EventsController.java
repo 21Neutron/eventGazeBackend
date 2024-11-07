@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +25,14 @@ public class EventsController {
 
 //    Returns all events in a list
     @GetMapping("/getAll")
-    public List<Events> getAll(){
-        return eventsService.getAllEvents();
+    public ResponseEntity<List<Events>> getAllEvents(){
+        List<Events> events = eventsService.getAllEvents();
+
+        if (events.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(events,HttpStatus.OK);
+        }
     }
 
 
@@ -102,12 +107,16 @@ public class EventsController {
 
 //  For updating or editing an event
 
-
     @PutMapping("id/{myId}")
-    public Events editByEventId(@PathVariable Long myId, @RequestBody Events newEvent){
-        return eventsService.updateEventById(myId, newEvent);
-    }
+    public ResponseEntity<Events> editByEventId(@PathVariable Long myId, @RequestBody Events newEvent) {
+        Events updatedEvent = eventsService.updateEventById(myId, newEvent);
 
+        if (updatedEvent == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+        }
+    }
 
 }
 

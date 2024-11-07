@@ -27,6 +27,6 @@ public class Students {
 
     @JoinColumn(name = "college_id",referencedColumnName = "college_id")
     @ManyToOne
-    private CollegeLists collegeLists;
+    private Colleges collegeList;
 
 }

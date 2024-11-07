@@ -5,6 +5,7 @@ import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.repository.EventsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Component
+@Service
 public class EventsService {
 
     @Autowired
