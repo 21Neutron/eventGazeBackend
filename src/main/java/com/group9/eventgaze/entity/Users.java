@@ -1,8 +1,10 @@
 package com.group9.eventgaze.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+
 
 import java.time.LocalDateTime;
 
@@ -19,6 +21,7 @@ public class Users{
 
 
     @Column(name = "user_mail")
+    @Email
     private String userEmail;
 
 

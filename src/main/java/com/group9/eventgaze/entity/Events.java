@@ -33,13 +33,22 @@ public class Events {
     @Column(name = "event_scope")
     private String eventScope;
 
-    @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
-    @ManyToOne
-    private Publishers publishers;
 
     @Column(name = "event_tags")
     private String eventTags;
 
     @Column(name = "event_art")
     private String eventArt;
+
+
+    @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
+    @ManyToOne
+    private Publishers publishers;
+
+    @JoinColumn(name = "event_category_id",referencedColumnName = "event_category_id")
+    @ManyToOne
+    private EventCategory eventCategory;
+
+
+
 }

@@ -17,4 +17,7 @@ public class CollegeLists {
 
     @Column(name = "college_name")
     private String collegeName;
+
+    @Column(name = "collegeAddress")
+    private String collegeAddress;
 }

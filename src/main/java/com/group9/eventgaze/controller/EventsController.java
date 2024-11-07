@@ -3,6 +3,8 @@ package com.group9.eventgaze.controller;
 import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.service.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,7 +25,7 @@ public class EventsController {
 
 
 //    Returns all events in a list
-    @GetMapping
+    @GetMapping("/getAll")
     public List<Events> getAll(){
         return eventsService.getAllEvents();
     }
@@ -33,13 +36,13 @@ public class EventsController {
 
 
     @PostMapping("/create")
-    public String createEvent(
+    public ResponseEntity<String> createEvent(
             @RequestParam("eventName") String eventName,
             @RequestParam("eventDescription") String eventDescription,
             @RequestParam("eventDate") String eventDateStr,
             @RequestParam("eventScope") String eventScope,
             @RequestParam("eventTags") String eventTags,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("eventArt") MultipartFile file
     ) {
         try {
 
@@ -56,12 +59,10 @@ public class EventsController {
 
 
             eventsService.saveEvent(event, file);
-            return "Event created successfully";
-        } catch (DateTimeParseException e) {
-            return "Invalid date format. Please use 'dd-MM-yyyy'";
+            return ResponseEntity.status(HttpStatus.CREATED).body("Event created successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            return "Error while creating event.";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while creating event.");
         }
     }
 
@@ -72,8 +73,14 @@ public class EventsController {
 
 
     @GetMapping("id/{myId}")
-    public Events getEventById(@PathVariable Long myId){
-        return eventsService.findEventById(myId).orElse(null);
+    public ResponseEntity<Events> getEventById(@PathVariable Long myId){
+        Optional<Events> events = eventsService.findEventById(myId);
+
+        if(events.isPresent()){
+            return ResponseEntity.ok(events.get());
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 
@@ -82,9 +89,14 @@ public class EventsController {
 
 
     @DeleteMapping("id/{myId}")
-    public String deleteEventById(@PathVariable Long myId) {
-        eventsService.deleteEventById(myId);
-        return "successfully deleted";
+    public ResponseEntity<Void>deleteEventById(@PathVariable Long myId) {
+        Optional<Events> events = eventsService.findEventById(myId);
+        if(events.isPresent()){
+            eventsService.deleteEventById(myId);
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 
