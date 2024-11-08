@@ -1,6 +1,9 @@
 package com.group9.eventgaze.controller;
 
+import com.group9.eventgaze.entity.EventCategory;
+import com.group9.eventgaze.entity.EventRequestDTO;
 import com.group9.eventgaze.entity.Events;
+import com.group9.eventgaze.service.EventCategoryService;
 import com.group9.eventgaze.service.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,8 @@ public class EventsController {
     @Autowired
     private EventsService eventsService;
 
+    @Autowired
+    private EventCategoryService eventCategoryService;
 
 //    Returns all events in a list
     @GetMapping("/getAll")
@@ -41,35 +46,16 @@ public class EventsController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> createEvent(
-            @RequestParam("eventName") String eventName,
-            @RequestParam("eventDescription") String eventDescription,
-            @RequestParam("eventDate") String eventDateStr,
-            @RequestParam("eventScope") String eventScope,
-            @RequestParam("eventTags") String eventTags,
-            @RequestParam("eventArt") MultipartFile file
-    ) {
+    public ResponseEntity<String> createEvent(@ModelAttribute  EventRequestDTO requestDTO) {
         try {
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            LocalDate eventDate = LocalDate.parse(eventDateStr, formatter);
-
-
-            Events event = new Events();
-            event.setEventName(eventName);
-            event.setEventDescription(eventDescription);
-            event.setEventDate(eventDate);
-            event.setEventScope(eventScope);
-            event.setEventTags(eventTags);
-
-
-            eventsService.saveEvent(event, file);
+            eventsService.createEvent(requestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Event created successfully");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while creating event.");
         }
     }
+
 
 
 

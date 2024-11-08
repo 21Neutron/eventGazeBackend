@@ -1,6 +1,8 @@
 package com.group9.eventgaze.service;
 
 
+import com.group9.eventgaze.entity.EventCategory;
+import com.group9.eventgaze.entity.EventRequestDTO;
 import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.repository.EventsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +24,9 @@ public class EventsService {
     private EventsRepo eventsRepo;
 
     @Autowired
+    private EventCategoryService eventCategoryService;
+
+    @Autowired
     private S3Service s3Service;
 
 
@@ -27,16 +34,27 @@ public class EventsService {
         return eventsRepo.findAll();
     }
 
-    // For saving events
+    public void createEvent(EventRequestDTO eventRequestDTO) throws IOException {
 
-    public void saveEvent(Events events, MultipartFile file) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate eventDate = LocalDate.parse(eventRequestDTO.getEventDate(), formatter);
 
-        Events savedEvent = eventsRepo.save(events);
+        EventCategory eventCategory = eventCategoryService.findByIdOrThrow(eventRequestDTO.getEventCategoryId());
 
-        if(file != null && !file.isEmpty()){
-            String fileUrl = s3Service.uploadFile("events/"+file.getOriginalFilename(),file);
+        Events event = new Events();
+        event.setEventName(eventRequestDTO.getEventName());
+        event.setEventDescription(eventRequestDTO.getEventDescription());
+        event.setEventDate(eventDate);
+        event.setEventScope(eventRequestDTO.getEventScope());
+        event.setEventTags(eventRequestDTO.getEventTags());
+        event.setEventCategory(eventCategory);
 
+        Events savedEvent = eventsRepo.save(event);
+
+        if (eventRequestDTO.getEventArt() != null && !eventRequestDTO.getEventArt().isEmpty()) {
+            String fileUrl = s3Service.uploadFile("events/" + eventRequestDTO.getEventArt().getOriginalFilename(), eventRequestDTO.getEventArt());
             savedEvent.setEventArt(fileUrl);
+
             eventsRepo.save(savedEvent);
         }
     }
