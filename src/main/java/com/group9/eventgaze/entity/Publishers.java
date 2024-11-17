@@ -16,11 +16,12 @@ public class Publishers {
     @Column(name = "publisher_id")
     private Long publisherId;
 
-    @Column(name = "publisher_org_name")
+    @Column(name = "publisher_org_name",nullable = false)
     private String publisherOrgName;
 
-    @Column(name = "publisher_description")
-    private String publisherDescription;
+
+    @Column(name = "publisher_image")
+    private String publisherImage;
 
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")

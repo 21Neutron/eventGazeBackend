@@ -20,20 +20,20 @@ public class Users{
     private Long userId;
 
 
-    @Column(name = "user_mail")
+    @Column(name = "user_mail",nullable = false)
     @Email
     private String userEmail;
 
 
-    @Column(name = "user_password")
+    @Column(name = "user_password",nullable = false)
     private String userPassword;
 
 
-    @Column(name = "user_role")
+    @Column(name = "user_role",nullable = false)
     private String userRole;
 
 
-    @Column(name = "created_at")
+    @Column(name = "created_at",updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

@@ -1,14 +1,16 @@
 package com.group9.eventgaze.service;
 
 
+import com.group9.eventgaze.entity.Colleges;
 import com.group9.eventgaze.entity.EventCategory;
-import com.group9.eventgaze.entity.EventRequestDTO;
+import com.group9.eventgaze.entity.Publishers;
+import com.group9.eventgaze.entity.dto.EventRequestDTO;
 import com.group9.eventgaze.entity.Events;
+import com.group9.eventgaze.repository.CollegesRepo;
 import com.group9.eventgaze.repository.EventsRepo;
+import com.group9.eventgaze.repository.PublishersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,6 +31,11 @@ public class EventsService {
     @Autowired
     private S3Service s3Service;
 
+    @Autowired
+    private CollegesRepo collegesRepo;
+
+    @Autowired
+    private PublishersRepo publishersRepo;
 
     public List<Events> getAllEvents() {
         return eventsRepo.findAll();
@@ -45,7 +52,6 @@ public class EventsService {
         event.setEventName(eventRequestDTO.getEventName());
         event.setEventDescription(eventRequestDTO.getEventDescription());
         event.setEventDate(eventDate);
-        event.setEventScope(eventRequestDTO.getEventScope());
         event.setEventTags(eventRequestDTO.getEventTags());
         event.setEventCategory(eventCategory);
 
@@ -59,11 +65,26 @@ public class EventsService {
         }
     }
 
-    // For finding events by Id
+    // For finding events by event ID
 
     public Optional<Events> findEventById(Long myId){
         return eventsRepo.findById(myId);
     }
+
+    //For fetching event by the event category ID
+
+
+//    public List<Events> getEventsByCategory(Long categoryId) {
+//        return eventsRepo.findByEventCategory_CategoryId(categoryId);
+//    }
+//
+//    //For fetching by college ID
+//
+//    public List<Events> getEventsByCollegeId(Long collegeId){
+//        return eventsRepo.findByCollege_Id(collegeId);
+//    }
+
+//    For deleting an event with the eventId
 
     public void deleteEventById(Long myId){
         eventsRepo.deleteById(myId);

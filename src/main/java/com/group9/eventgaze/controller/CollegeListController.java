@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/collegelist")
+@RequestMapping("/eventgaze/collegelist")
 public class CollegeListController {
 
     @Autowired
     private CollegesService collegesService;
+
+//    For fetching all colleges in a list
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Colleges>> getAllColleges(){
@@ -32,15 +34,18 @@ public class CollegeListController {
         }
     }
 
-    @GetMapping("/id{myId}")
-    public ResponseEntity<Colleges> getCollegeById(@PathVariable Long myId){
-        Optional<Colleges> colleges = collegesService.getCOllegeByID(myId);
+//    For fetching college by collegeId
 
-        if (colleges.isPresent()){
-            return ResponseEntity.ok(colleges.get());
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+//    @GetMapping("/id{myId}")
+//    public ResponseEntity<Colleges> getCollegeById(@PathVariable Long myId){
+//        Optional<Colleges> colleges = collegesService.getCollegeByID(myId);
+//
+//        if (colleges.isPresent()){
+//            return ResponseEntity.ok(colleges.get());
+//        }else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//    }
+
 
 }

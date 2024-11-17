@@ -1,15 +1,18 @@
-package com.group9.eventgaze.entity;
+package com.group9.eventgaze.entity.dto;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 public class EventRequestDTO {
     private String eventName;
     private String eventDescription;
     private String eventDate;
-    private String eventScope;
     private String eventTags;
     private Long eventCategoryId;
+    private Long publisherId;
+    private List<CollegeDTO> colleges;
     private MultipartFile eventArt;
 }

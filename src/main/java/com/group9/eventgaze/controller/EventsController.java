@@ -1,7 +1,6 @@
 package com.group9.eventgaze.controller;
 
-import com.group9.eventgaze.entity.EventCategory;
-import com.group9.eventgaze.entity.EventRequestDTO;
+import com.group9.eventgaze.entity.dto.EventRequestDTO;
 import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.service.EventCategoryService;
 import com.group9.eventgaze.service.EventsService;
@@ -9,17 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("eventgaze/events")
 public class EventsController {
 
     @Autowired
@@ -49,10 +45,11 @@ public class EventsController {
     public ResponseEntity<String> createEvent(@ModelAttribute  EventRequestDTO requestDTO) {
         try {
             eventsService.createEvent(requestDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Event created successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while creating event.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -73,6 +70,31 @@ public class EventsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+//    Fetch event with categoryId
+
+
+//    @GetMapping("/category/{categoryId}")
+//    public ResponseEntity<List<Events>> getEventsByCategory(@PathVariable Long categoryId) {
+//        List<Events> events = eventsService.getEventsByCategory(categoryId);
+//        if (events.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok(events);
+//    }
+
+
+
+//    Fetch events with college id
+//
+//    public ResponseEntity<List<Events>>getEventsByCollegeId(@PathVariable Long collegId){
+//        List<Events> events = eventsService.getEventsByCollegeId(collegId);
+//        if(events.isEmpty()){
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok(events);
+//    }
+
 
 
 
@@ -103,6 +125,7 @@ public class EventsController {
             return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
         }
     }
+
 
 }
 

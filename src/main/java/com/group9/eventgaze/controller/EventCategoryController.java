@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/eventgaze/category")
 public class EventCategoryController {
 
     @Autowired
     private EventCategoryService eventCategoryService;
 
+//    For getting a list of all events Category
 
     @GetMapping("/getAll")
     public ResponseEntity<List<EventCategory>> getAll(){
@@ -30,4 +31,6 @@ public class EventCategoryController {
             return new ResponseEntity<>(eventCategories,HttpStatus.OK);
         }
     }
+
+
 }

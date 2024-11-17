@@ -11,7 +11,7 @@ public class EventCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_category_id")
-    private Long eventCategoryId;
+    private Long categoryId;
 
     @Column(name = "category_name")
     private String eventName;

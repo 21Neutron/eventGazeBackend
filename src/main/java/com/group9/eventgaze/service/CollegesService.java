@@ -18,7 +18,7 @@ public class CollegesService {
         return collegesRepo.findAll();
     }
 
-    public Optional<Colleges> getCOllegeByID(Long myId){
-        return collegesRepo.findById(myId);
-    }
+//    public Optional<Colleges> getCollegeByID(Long myId){
+//        return collegesRepo.findByCollegeId(myId);
+//    }
 }

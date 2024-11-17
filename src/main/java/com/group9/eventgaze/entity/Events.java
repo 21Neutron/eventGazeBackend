@@ -5,9 +5,10 @@ package com.group9.eventgaze.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.w3c.dom.Text;
 
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 @Data
@@ -23,9 +24,9 @@ public class Events {
     @Column(name = "event_name")
     private String eventName;
 
-    @Column(name = "event_description")
+    @Lob
+    @Column(name = "event_description",columnDefinition = "Text")
     private String eventDescription;
-
 
     @Column(name = "event_date")
     private LocalDate eventDate;
@@ -40,6 +41,13 @@ public class Events {
     @Column(name = "event_art")
     private String eventArt;
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_colleges",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "college_id")
+    )
+    private List<Colleges> college;
 
     @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
     @ManyToOne
@@ -48,7 +56,5 @@ public class Events {
     @JoinColumn(name = "event_category_id",referencedColumnName = "event_category_id")
     @ManyToOne
     private EventCategory eventCategory;
-
-
 
 }
