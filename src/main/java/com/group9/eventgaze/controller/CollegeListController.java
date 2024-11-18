@@ -36,16 +36,15 @@ public class CollegeListController {
 
 //    For fetching college by collegeId
 
-//    @GetMapping("/id{myId}")
-//    public ResponseEntity<Colleges> getCollegeById(@PathVariable Long myId){
-//        Optional<Colleges> colleges = collegesService.getCollegeByID(myId);
-//
-//        if (colleges.isPresent()){
-//            return ResponseEntity.ok(colleges.get());
-//        }else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//    }
+    @GetMapping("/id{myId}")
+    public ResponseEntity<Colleges> getCollegeById(@PathVariable Long myId){
+        Colleges college = collegesService.getCollegeById(myId);
+        if (college != null) {
+            return ResponseEntity.ok(college);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 
 }

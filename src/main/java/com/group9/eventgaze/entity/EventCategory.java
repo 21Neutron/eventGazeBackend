@@ -14,6 +14,6 @@ public class EventCategory {
     private Long categoryId;
 
     @Column(name = "category_name")
-    private String eventName;
+    private String categoryName;
 
 }

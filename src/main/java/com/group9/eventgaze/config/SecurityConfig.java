@@ -41,17 +41,22 @@ public class SecurityConfig {
                         // Publicly accessible endpoints
 
                         .requestMatchers("/eventgaze/auth/**").permitAll()
-                        .requestMatchers("/eventgaze/collegelist/getAll", "/eventgaze/collegelist/id/**").permitAll()
-                        .requestMatchers("/eventgaze/events/getAll","/eventgaze/events/id/**","/eventgaze/category/getAll","/error").permitAll()
+                        .requestMatchers("/eventgaze/events/getAll",
+                                                    "/eventgaze/events/eventId/id/**",
+                                                    "/eventgaze/events/category/id/**",
+                                                    "/eventgaze/events/college/id/**").permitAll()
+
+
+                        .requestMatchers("/eventgaze/collegelist/getAll",
+                                                   "/eventgaze/collegelist/id/**").permitAll()
+                        .requestMatchers("/eventgaze/category/getAll","/error").permitAll()
 
                         // Role-based secured endpoints
 
                         .requestMatchers(HttpMethod.POST, "/eventgaze/events/create").hasRole("PUBLISHER")
-                        .requestMatchers(HttpMethod.PUT, "/eventgaze/events/id/**").hasRole("PUBLISHER")
+                        .requestMatchers(HttpMethod.PUT, "/eventgaze/events/eventEdit/id/**").hasRole("PUBLISHER")
                         .requestMatchers(HttpMethod.DELETE, "/eventgaze/events/id/**").hasRole("PUBLISHER")
                         .requestMatchers("/eventgaze/events/**").hasAnyRole("STUDENT", "PUBLISHER")
-
-
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

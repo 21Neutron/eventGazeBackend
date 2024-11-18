@@ -2,6 +2,7 @@ package com.group9.eventgaze.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,23 +32,11 @@ public class Events {
     @Column(name = "event_date")
     private LocalDate eventDate;
 
-    @Column(name = "event_scope")
-    private String eventScope;
-
-
     @Column(name = "event_tags")
     private String eventTags;
 
     @Column(name = "event_art")
     private String eventArt;
-
-    @ManyToMany
-    @JoinTable(
-            name = "event_colleges",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "college_id")
-    )
-    private List<Colleges> college;
 
     @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
     @ManyToOne
@@ -57,4 +46,12 @@ public class Events {
     @ManyToOne
     private EventCategory eventCategory;
 
+    //@JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "event_colleges",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "college_id")
+    )
+    private List<Colleges> college;
 }

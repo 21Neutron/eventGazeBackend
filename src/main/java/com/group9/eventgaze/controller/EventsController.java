@@ -2,8 +2,10 @@ package com.group9.eventgaze.controller;
 
 import com.group9.eventgaze.entity.dto.EventRequestDTO;
 import com.group9.eventgaze.entity.Events;
+import com.group9.eventgaze.entity.dto.EventResponseDTO;
 import com.group9.eventgaze.service.EventCategoryService;
 import com.group9.eventgaze.service.EventsService;
+import com.group9.eventgaze.utils.EventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +28,13 @@ public class EventsController {
 
 //    Returns all events in a list
     @GetMapping("/getAll")
-    public ResponseEntity<List<Events>> getAllEvents(){
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents(){
         List<Events> events = eventsService.getAllEvents();
 
         if (events.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
-            return new ResponseEntity<>(events,HttpStatus.OK);
+            return new ResponseEntity<>(EventMapper.toEventResponseDTOList(events), HttpStatus.OK);
         }
     }
 
@@ -60,13 +62,14 @@ public class EventsController {
 //  For getting event by ID
 
 
-    @GetMapping("id/{myId}")
-    public ResponseEntity<Events> getEventById(@PathVariable Long myId){
-        Optional<Events> events = eventsService.findEventById(myId);
+    @GetMapping("eventId/id/{myId}")
+    public ResponseEntity<EventResponseDTO> getEventById(@PathVariable Long myId) {
+        Optional<Events> optionalEvent = eventsService.findEventById(myId);
 
-        if(events.isPresent()){
-            return ResponseEntity.ok(events.get());
-        }else {
+        if (optionalEvent.isPresent()) {
+            Events event = optionalEvent.get();
+            return new ResponseEntity<>(EventMapper.toEventResponseDTO(event), HttpStatus.OK);
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -74,26 +77,27 @@ public class EventsController {
 //    Fetch event with categoryId
 
 
-//    @GetMapping("/category/{categoryId}")
-//    public ResponseEntity<List<Events>> getEventsByCategory(@PathVariable Long categoryId) {
-//        List<Events> events = eventsService.getEventsByCategory(categoryId);
-//        if (events.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(events);
-//    }
+    @GetMapping("/category/id/{categoryId}")
+    public ResponseEntity<List<EventResponseDTO>> getEventsByCategory(@PathVariable Long categoryId) {
+        List<Events> events = eventsService.getEventsByCategory(categoryId);
+        if (events.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(EventMapper.toEventResponseDTOList(events), HttpStatus.OK);
+    }
 
 
 
 //    Fetch events with college id
-//
-//    public ResponseEntity<List<Events>>getEventsByCollegeId(@PathVariable Long collegId){
-//        List<Events> events = eventsService.getEventsByCollegeId(collegId);
-//        if(events.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(events);
-//    }
+
+    @GetMapping("college/id/{collegeId}")
+    public ResponseEntity<List<EventResponseDTO>>getEventsByCollegeId(@PathVariable Long collegeId){
+        List<Events> events = eventsService.getEventsByCollegeId(collegeId);
+        if(events.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>(EventMapper.toEventResponseDTOList(events), HttpStatus.OK);
+    }
 
 
 
@@ -115,7 +119,7 @@ public class EventsController {
 
 //  For updating or editing an event
 
-    @PutMapping("id/{myId}")
+    @PutMapping("eventEdit/id/{myId}")
     public ResponseEntity<Events> editByEventId(@PathVariable Long myId, @RequestBody Events newEvent) {
         Events updatedEvent = eventsService.updateEventById(myId, newEvent);
 

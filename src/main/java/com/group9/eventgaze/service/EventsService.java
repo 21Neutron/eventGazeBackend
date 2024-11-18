@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
 public class EventsService {
 
@@ -35,11 +36,20 @@ public class EventsService {
     private CollegesRepo collegesRepo;
 
     @Autowired
+    private CollegesService collegesService;
+
+    @Autowired
     private PublishersRepo publishersRepo;
+
+    @Autowired
+    private PublishersService publishersService;
+
 
     public List<Events> getAllEvents() {
         return eventsRepo.findAll();
     }
+
+    // for creating an event
 
     public void createEvent(EventRequestDTO eventRequestDTO) throws IOException {
 
@@ -48,12 +58,18 @@ public class EventsService {
 
         EventCategory eventCategory = eventCategoryService.findByIdOrThrow(eventRequestDTO.getEventCategoryId());
 
+        Publishers publishers = publishersService.findByIdOrThrow(eventRequestDTO.getPublisherId());
+
         Events event = new Events();
         event.setEventName(eventRequestDTO.getEventName());
         event.setEventDescription(eventRequestDTO.getEventDescription());
         event.setEventDate(eventDate);
         event.setEventTags(eventRequestDTO.getEventTags());
         event.setEventCategory(eventCategory);
+        event.setPublishers(publishers);
+
+        List<Colleges> colleges = collegesService.findByIds(eventRequestDTO.getColleges());
+        event.setCollege(colleges);
 
         Events savedEvent = eventsRepo.save(event);
 
@@ -74,15 +90,15 @@ public class EventsService {
     //For fetching event by the event category ID
 
 
-//    public List<Events> getEventsByCategory(Long categoryId) {
-//        return eventsRepo.findByEventCategory_CategoryId(categoryId);
-//    }
-//
-//    //For fetching by college ID
-//
-//    public List<Events> getEventsByCollegeId(Long collegeId){
-//        return eventsRepo.findByCollege_Id(collegeId);
-//    }
+    public List<Events> getEventsByCategory(Long categoryId) {
+        return eventsRepo.findByEventCategory_CategoryId(categoryId);
+    }
+
+//    For fetching events by college ID
+
+    public List<Events> getEventsByCollegeId(Long collegeId){
+        return eventsRepo.findByCollege_CollegeId(collegeId);
+    }
 
 //    For deleting an event with the eventId
 
@@ -100,7 +116,6 @@ public class EventsService {
 
             oldEvent.setEventDescription(newEvent.getEventDescription() != null && !newEvent.getEventDescription().isEmpty() ? newEvent.getEventDescription() : oldEvent.getEventDescription());
 
-            oldEvent.setEventScope(newEvent.getEventScope() != null && !newEvent.getEventScope().isEmpty() ? newEvent.getEventScope() : oldEvent.getEventScope());
 
             oldEvent.setEventTags(newEvent.getEventTags() != null && !newEvent.getEventTags().isEmpty() ? newEvent.getEventTags() : oldEvent.getEventTags());
 
