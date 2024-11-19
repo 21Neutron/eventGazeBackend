@@ -48,7 +48,7 @@ public class SignUpService {
         Students students = new Students();
         students.setFirstName(studentDTO.getFirstName());
         students.setLastName(studentDTO.getLastName());
-        students.setCollegeList(college);
+        students.setCollege(college);
         students.setUsers(savedUser);
         studentsRepo.save(students);
 

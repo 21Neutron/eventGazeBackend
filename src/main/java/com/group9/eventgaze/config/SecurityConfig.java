@@ -46,8 +46,8 @@ public class SecurityConfig {
                                                     "/eventgaze/events/category/id/**").permitAll()
 
 
-                        .requestMatchers("/eventgaze/collegeList/getAll",
-                                                   "/eventgaze/collegeList/id/**").permitAll()
+                        .requestMatchers("/eventgaze/college/getAll",
+                                                   "/eventgaze/college/id/**").permitAll()
                         .requestMatchers("/eventgaze/category/getAll","/error").permitAll()
 
                         // Role-based secured endpoints

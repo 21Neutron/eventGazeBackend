@@ -25,7 +25,7 @@ public class LoginService {
 
     public LoginResponse logIn(LoginRequest loginRequest) {
         // Retrieve the user by email
-        Users users = usersRepo.findByUserEmail(loginRequest.getUsername())
+        Users users = usersRepo.findByUserEmail(loginRequest.getUserName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         // Validate password

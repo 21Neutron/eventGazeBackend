@@ -41,16 +41,19 @@ public class Events {
     @Column(name = "event_art")
     private String eventArt;
 
+
     @JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Publishers publishers;
 
+
     @JoinColumn(name = "event_category_id",referencedColumnName = "event_category_id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private EventCategory eventCategory;
 
-    //@JsonIgnore
-    @ManyToMany
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "event_colleges",
             joinColumns = @JoinColumn(name = "event_id"),
