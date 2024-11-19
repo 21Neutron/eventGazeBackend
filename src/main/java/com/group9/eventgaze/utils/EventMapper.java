@@ -22,7 +22,7 @@ public class EventMapper {
         dto.setEventDate(event.getEventDate().toString()); // Format as needed
         dto.setEventTags(event.getEventTags());
         dto.setEventArt(event.getEventArt());
-        dto.setCollege(event.getCollege().stream().map(EventMapper::toCollegeDTO).collect(Collectors.toList()));
+        dto.setCollege(toCollegeDTO(event.getCollege()));
         dto.setEventCategory(event.getEventCategory());
         dto.setPublishers(toPublisherDTO(event.getPublishers()));
         return dto;

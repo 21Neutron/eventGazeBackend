@@ -47,17 +47,12 @@ public class Events {
     private Publishers publishers;
 
 
+    @ManyToOne
     @JoinColumn(name = "event_category_id",referencedColumnName = "event_category_id")
-    @ManyToOne(cascade = CascadeType.ALL)
     private EventCategory eventCategory;
 
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "event_colleges",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "college_id")
-    )
-    private List<Colleges> college;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "college_id",referencedColumnName = "college_id")
+    private Colleges college;
 }

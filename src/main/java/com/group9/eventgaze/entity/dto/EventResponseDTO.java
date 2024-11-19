@@ -13,7 +13,7 @@ public class EventResponseDTO {
     private String eventDate;
     private String eventTags;
     private String eventArt;
-    private List<CollegeDTO> college;
+    private CollegeDTO college;
     private EventCategory eventCategory;
     private PublisherDTO publishers;
 }

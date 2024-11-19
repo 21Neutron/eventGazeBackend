@@ -13,6 +13,6 @@ public class EventRequestDTO {
     private String eventTags;
     private Long eventCategoryId;
     private Long publisherId;
-    private List<Long> colleges;
+    private Long colleges;
     private MultipartFile eventArt;
 }

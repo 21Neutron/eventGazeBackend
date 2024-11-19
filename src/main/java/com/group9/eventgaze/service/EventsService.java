@@ -68,8 +68,8 @@ public class EventsService {
         event.setEventCategory(eventCategory);
         event.setPublishers(publishers);
 
-        List<Colleges> colleges = collegesService.findByIds(eventRequestDTO.getColleges());
-        event.setCollege(colleges);
+        Colleges college = collegesService.findById(eventRequestDTO.getColleges()); // Find the college by its ID
+        event.setCollege(college);
 
         Events savedEvent = eventsRepo.save(event);
 
