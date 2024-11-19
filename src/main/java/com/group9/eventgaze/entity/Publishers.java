@@ -23,6 +23,9 @@ public class Publishers {
     @Column(name = "publisher_image")
     private String publisherImage;
 
+    @Column(name = "publisher_description")
+    private String publisherDescription;
+
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")
     private Users users;

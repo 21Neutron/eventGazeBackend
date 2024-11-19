@@ -32,6 +32,9 @@ public class Events {
     @Column(name = "event_date")
     private LocalDate eventDate;
 
+    @Column(name = "event_venue")
+    private String eventVenue;
+
     @Column(name = "event_tags")
     private String eventTags;
 

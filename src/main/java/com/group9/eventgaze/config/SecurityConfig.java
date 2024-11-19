@@ -43,12 +43,11 @@ public class SecurityConfig {
                         .requestMatchers("/eventgaze/auth/**").permitAll()
                         .requestMatchers("/eventgaze/events/getAll",
                                                     "/eventgaze/events/eventId/id/**",
-                                                    "/eventgaze/events/category/id/**",
-                                                    "/eventgaze/events/college/id/**").permitAll()
+                                                    "/eventgaze/events/category/id/**").permitAll()
 
 
-                        .requestMatchers("/eventgaze/collegelist/getAll",
-                                                   "/eventgaze/collegelist/id/**").permitAll()
+                        .requestMatchers("/eventgaze/collegeList/getAll",
+                                                   "/eventgaze/collegeList/id/**").permitAll()
                         .requestMatchers("/eventgaze/category/getAll","/error").permitAll()
 
                         // Role-based secured endpoints

@@ -15,7 +15,7 @@ public class JwtTokenUtil {
 
     private static final String key = "nahinpH6L13PejYffzqajC6Kco+G8bqneE+hTpriZtEY";
 
-    private static final long EXPIRATION_TIME = 3600000; // 1 hour in milliseconds
+    private static final long EXPIRATION_TIME = 86400000; // 1 hour in milliseconds
 
 
     public String generateToken(Long userId, String role) {
@@ -23,7 +23,7 @@ public class JwtTokenUtil {
                 .setSubject(String.valueOf(userId))
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }

@@ -66,7 +66,6 @@ public class SignUpService {
         Publishers publishers = new Publishers();
         publishers.setPublisherOrgName(publisherSignUpDTO.getPublisherOrgName());
         publishers.setUsers(savedUser);
-        publishers.setUsers(savedUser);
         publishersRepo.save(publishers);
     }
 

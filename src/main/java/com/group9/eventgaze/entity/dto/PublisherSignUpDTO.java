@@ -7,6 +7,5 @@ public class PublisherSignUpDTO {
     private String userEmail;
     private String userPassword;
     private String publisherOrgName;
-    private String publisherDescription;
-    private String publisherImage;
+
 }

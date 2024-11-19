@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/eventgaze/collegelist")
+@RequestMapping("/eventgaze/collegeList")
 public class CollegeListController {
 
     @Autowired

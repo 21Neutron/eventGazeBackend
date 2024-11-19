@@ -20,4 +20,7 @@ public class Colleges {
 
     @Column(name = "collegeAddress")
     private String collegeAddress;
+
+    @Column(name = "college_image")
+    private String collegeImage;
 }
