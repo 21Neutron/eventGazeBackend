@@ -41,8 +41,8 @@ public class SecurityConfig {
                         // Publicly accessible endpoints
 
                         .requestMatchers("/eventgaze/auth/**").permitAll()
-                        .requestMatchers("/eventgaze/events/getAll",
-                                                    "/eventgaze/events/eventId/id/**",
+                        .requestMatchers(
+                                                    "/eventgaze/events/eventId/id/**","/eventgaze/events/getAll",
                                                     "/eventgaze/events/category/id/**").permitAll()
 
 
@@ -52,7 +52,7 @@ public class SecurityConfig {
 
                         // Role-based secured endpoints
 
-                        .requestMatchers(HttpMethod.POST, "/eventgaze/events/create").hasRole("PUBLISHER")
+                        .requestMatchers(HttpMethod.POST, "/eventgaze/events/create").hasAnyRole("PUBLISHER","STUDENT")
                         .requestMatchers(HttpMethod.PUT, "/eventgaze/events/eventEdit/id/**").hasRole("PUBLISHER")
                         .requestMatchers(HttpMethod.DELETE, "/eventgaze/events/id/**").hasRole("PUBLISHER")
                         .requestMatchers("/eventgaze/events/**").hasAnyRole("STUDENT", "PUBLISHER")

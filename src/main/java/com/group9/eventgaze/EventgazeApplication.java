@@ -8,7 +8,7 @@ public class EventgazeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EventgazeApplication.class, args);
-		System.out.println();
+
 	}
 
 }
