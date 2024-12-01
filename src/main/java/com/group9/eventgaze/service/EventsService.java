@@ -1,11 +1,8 @@
 package com.group9.eventgaze.service;
 
 
-import com.group9.eventgaze.entity.Colleges;
-import com.group9.eventgaze.entity.EventCategory;
-import com.group9.eventgaze.entity.Publishers;
+import com.group9.eventgaze.entity.*;
 import com.group9.eventgaze.entity.dto.EventRequestDTO;
-import com.group9.eventgaze.entity.Events;
 import com.group9.eventgaze.repository.CollegesRepo;
 import com.group9.eventgaze.repository.EventsRepo;
 import com.group9.eventgaze.repository.PublishersRepo;
@@ -44,6 +41,9 @@ public class EventsService {
     @Autowired
     private PublishersService publishersService;
 
+    @Autowired
+    private UsersService usersService;
+
 
     public List<Events> getAllEvents() {
         return eventsRepo.findAll();
@@ -58,7 +58,8 @@ public class EventsService {
 
         EventCategory eventCategory = eventCategoryService.findByIdOrThrow(eventRequestDTO.getEventCategoryId());
 
-        Publishers publishers = publishersService.findByIdOrThrow(eventRequestDTO.getPublisherId());
+        Users user = usersService.findByIdOrThrow(eventRequestDTO.getUserId());
+        Publishers publishers = publishersService.findByUser(user);
 
         Events event = new Events();
         event.setEventName(eventRequestDTO.getEventName());

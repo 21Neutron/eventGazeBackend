@@ -12,7 +12,7 @@ public class EventRequestDTO {
     private String eventDate;
     private String eventTags;
     private Long eventCategoryId;
-    private Long publisherId;
+    private Long userId;
     private Long colleges;
     private MultipartFile eventArt;
 }

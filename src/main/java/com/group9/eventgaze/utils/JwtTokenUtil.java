@@ -15,7 +15,7 @@ public class JwtTokenUtil {
 
     private static final String key = "nahinpH6L13PejYffzqajC6Kco+G8bqneE+hTpriZtEY";
 
-    private static final long EXPIRATION_TIME = 86400000; // 1 hour in milliseconds
+    private static final long EXPIRATION_TIME = 31556952000L;
 
 
     public String generateToken(Long userId, String role) {
