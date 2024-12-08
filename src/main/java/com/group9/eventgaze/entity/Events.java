@@ -52,7 +52,7 @@ public class Events {
     private EventCategory eventCategory;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "college_id",referencedColumnName = "college_id")
     private Colleges college;
 }
