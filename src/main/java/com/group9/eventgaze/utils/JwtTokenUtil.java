@@ -3,6 +3,8 @@ package com.group9.eventgaze.utils;
 
 import io.jsonwebtoken.*;
 
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -13,23 +15,25 @@ import java.util.Date;
 public class JwtTokenUtil {
 
 
-    private static final String key = "nahinpH6L13PejYffzqajC6Kco+G8bqneE+hTpriZtEY";
+    @Value("${JWT.SECRET.KEY}")
+    private String key;
+
 
     private static final long EXPIRATION_TIME = 31556952000L;
 
 
     public String generateToken(Long userId, String role) {
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))
+                .subject(String.valueOf(userId))
                 .claim("role", role)
-                .setIssuedAt(new Date())
+                .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
 
     public Claims getClaimsFromToken(String token) {
-        return Jwts.parser()  // Correct API call for version 0.12.6
+        return Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)

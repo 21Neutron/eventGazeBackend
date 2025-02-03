@@ -1,14 +1,12 @@
 package com.group9.eventgaze.entity.dto;
 import lombok.Data;
 import lombok.Getter;
-import org.hibernate.annotations.SecondaryRow;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.Collections;
+
 
 @Data
 @Getter
@@ -25,7 +23,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Grant authorities based on the user's role
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
